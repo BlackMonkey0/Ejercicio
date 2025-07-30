@@ -14,16 +14,24 @@ function cargarComparador() {
   const antes = localStorage.getItem("foto-antes");
   const despues = localStorage.getItem("foto-despues");
 
-  if (antes && despues) {
-    document.getElementById("img-antes").src = antes;
-    document.getElementById("img-despues").src = despues;
-    document.getElementById("comparador").classList.remove("hidden");
+  const imgAntes = document.getElementById("img-antes");
+  const imgDespues = document.getElementById("img-despues");
+  const comparador = document.getElementById("comparador");
+  const slider = document.getElementById("sliderComparador");
 
-    const slider = document.getElementById("sliderComparador");
+  if (antes && despues && imgAntes && imgDespues && comparador && slider) {
+    imgAntes.src = antes;
+    imgDespues.src = despues;
+    comparador.classList.remove("hidden");
+
+    // Eliminar listeners previos
+    slider.oninput = null;
     slider.addEventListener("input", () => {
       const valor = slider.value;
-      document.getElementById("img-despues").style.clipPath = `inset(0 ${100 - valor}% 0 0)`;
+      imgDespues.style.clipPath = `inset(0 ${100 - valor}% 0 0)`;
     });
+    // Inicializar posición del slider con efecto
+    imgDespues.style.clipPath = `inset(0 ${100 - slider.value}% 0 0)`;
   }
 }
 
