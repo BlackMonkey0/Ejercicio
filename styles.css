@@ -7,8 +7,8 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(to bottom right, #f7fff7, #e8fdf5);
-  color: #1a1a1a;
+  background: linear-gradient(to bottom right, #0d0d0d, #1a1a1a);
+  color: #f5f5f5;
   line-height: 1.6;
   padding: 20px;
 }
@@ -17,17 +17,18 @@ body {
 header {
   text-align: center;
   padding: 1.5em;
-  background: linear-gradient(90deg, #ff6b35, #ff9f1c);
+  background: linear-gradient(90deg, #d72638, #ff3c00);
   color: white;
   border-radius: 15px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
 }
 
 header h1 {
-  font-size: 2em;
+  font-size: 2.2em;
   margin-bottom: 0.2em;
   font-weight: bold;
+  text-transform: uppercase;
 }
 
 header p {
@@ -44,16 +45,16 @@ main {
 /* 📌 Tarjetas / Secciones */
 section {
   margin-bottom: 30px;
-  background: white;
+  background: #1e1e1e;
   padding: 20px;
   border-radius: 15px;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.6);
   transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 section:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.8);
 }
 
 /* 📅 Calendario */
@@ -65,8 +66,8 @@ section:hover {
 }
 
 .dia {
-  background: #f0f9ff;
-  border: 2px solid #4ecdc4;
+  background: #292929;
+  border: 2px solid #ffba08;
   border-radius: 12px;
   padding: 12px;
   text-align: center;
@@ -75,14 +76,15 @@ section:hover {
 }
 
 .dia:hover {
-  background: #c8f7f0;
-  transform: scale(1.03);
+  background: #ff3c00;
+  transform: scale(1.05);
 }
 
 .dia h3 {
   font-size: 1em;
   margin-bottom: 5px;
   font-weight: bold;
+  color: #fff;
 }
 
 /* 📄 Detalle de día */
@@ -100,8 +102,8 @@ section:hover {
 }
 
 .card {
-  background: #f9f9f9;
-  border-left: 5px solid #ff6b35;
+  background: #292929;
+  border-left: 5px solid #ffba08;
   padding: 12px;
   margin-bottom: 10px;
   border-radius: 8px;
@@ -109,27 +111,28 @@ section:hover {
 
 .card h4 {
   margin-bottom: 5px;
+  color: #ffba08;
 }
 
 /* 🔘 Botones generales */
 button, .volver, .btn-control {
-  background: linear-gradient(90deg, #ff6b35, #ff9f1c);
+  background: linear-gradient(90deg, #d72638, #ff3c00);
   color: white;
   border: none;
   padding: 10px 20px;
-  border-radius: 10px;
-  margin-top: 15px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 0.95em;
-  font-weight: 500;
-  transition: background 0.3s ease, transform 0.2s ease;
+  font-weight: 600;
+  transition: all 0.3s ease;
   text-decoration: none;
   display: inline-block;
 }
 
 button:hover, .volver:hover, .btn-control:hover {
-  background: linear-gradient(90deg, #e85d2a, #ff8811);
-  transform: translateY(-1px);
+  background: linear-gradient(90deg, #ffba08, #ff8800);
+  color: black;
+  transform: scale(1.05);
 }
 
 /* 📊 Gráficos */
@@ -186,9 +189,9 @@ button:hover, .volver:hover, .btn-control:hover {
   max-width: 750px;
   margin: auto;
   padding: 20px;
-  background: #fffaf2;
+  background: #1e1e1e;
   border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.6);
 }
 
 .tabs {
@@ -199,16 +202,17 @@ button:hover, .volver:hover, .btn-control:hover {
 .tab-button {
   flex: 1;
   padding: 10px;
-  background: #eee;
+  background: #292929;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  color: white;
   transition: 0.3s;
 }
 
 .tab-button.active {
-  background: #4ecdc4;
-  color: white;
+  background: #ffba08;
+  color: black;
   font-weight: bold;
 }
 
@@ -223,24 +227,26 @@ form label {
 form input, form select {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #ff3c00;
   border-radius: 8px;
+  background: #2a2a2a;
+  color: white;
 }
 
 /* 🤖 Coach Virtual */
 #coach-virtual {
   padding: 20px;
-  background: #f1fff1;
+  background: #1a1a1a;
   border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.8);
 }
 
 .chat-box {
   max-height: 250px;
   overflow-y: auto;
-  border: 1px solid #ccc;
+  border: 1px solid #ffba08;
   padding: 15px;
-  background: white;
+  background: #0d0d0d;
   border-radius: 12px;
   margin-bottom: 10px;
 }
@@ -253,11 +259,11 @@ form input, form select {
 }
 
 .mensaje.ia {
-  background: #d2f4ea;
+  background: #292929;
 }
 
 .mensaje.usuario {
-  background: #ffe0b2;
+  background: #ff3c00;
   text-align: right;
 }
 
@@ -270,11 +276,13 @@ form input, form select {
   flex: 1;
   padding: 10px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #ff3c00;
+  background: #1e1e1e;
+  color: white;
 }
 
 .input-chat button {
-  background-color: #4ecdc4;
+  background: #ff3c00;
   border: none;
   color: white;
   padding: 10px 20px;
@@ -297,7 +305,7 @@ form input, form select {
 /* 📋 Lista de la compra */
 h2 {
   margin-top: 20px;
-  background: #4ecdc4;
+  background: #ff3c00;
   color: white;
   padding: 10px;
   border-radius: 8px;
@@ -312,11 +320,12 @@ ul {
 
 li {
   margin: 6px 0;
-  background: white;
+  background: #292929;
   padding: 8px;
   border-radius: 6px;
   display: flex;
   align-items: center;
+  color: white;
 }
 
 input[type="checkbox"] {
@@ -326,13 +335,25 @@ input[type="checkbox"] {
 #busqueda {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #ff3c00;
   border-radius: 6px;
   margin-bottom: 15px;
+  background: #1e1e1e;
+  color: white;
 }
 
 #contador {
   font-weight: bold;
   text-align: center;
   margin-bottom: 15px;
+  color: #ffba08;
+}
+
+/* 📌 Botones en fila principal */
+.botones-fila {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
 }
