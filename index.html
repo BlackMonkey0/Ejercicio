@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tu Entrenador y Dietista</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#ffa726">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#ffa726" />
 </head>
 <body>
 
@@ -32,29 +32,39 @@
 
     <!-- Progreso -->
     <section id="progreso">
-      <h2>📈 Progreso</h2>
-      <canvas id="graficoPeso" width="300" height="150"></canvas>
-      <canvas id="graficoFuerza" width="300" height="150"></canvas>
-      <div id="cuadroIMC" style="margin-top: 20px; font-size: 18px;"></div>
-    </section>
+       <h2>📈 Progreso</h2>
+           <canvas id="graficoPeso" width="300" height="150"></canvas>
+        <div style="text-align:center; margin-top: 10px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+  <button onclick="window.print()">🖨️ Imprimir/Guardar como PDF</button>
+  <button id="btnResetEstadisticas" style="background-color:#e53935; color:white;">
+    🔄 Reset Estadísticas
+  </button>
+</div>
+
+
+</div>
+
+        </div>
+</section>
+
 
     <!-- Progreso visual -->
     <section id="progreso-visual">
       <h2>📸 Progreso Visual (Antes vs Después)</h2>
       <div class="subida-fotos">
-        <label for="fotoAntes">Foto Semana 1 (Antes):
-          <input type="file" id="fotoAntes" accept="image/*" onchange="subirFoto(event, 'antes')">
+        <label>Foto Semana 1 (Antes):
+          <input type="file" accept="image/*" onchange="subirFoto(event, 'antes')" />
         </label>
-        <label for="fotoDespues">Foto Semana Actual (Después):
-          <input type="file" id="fotoDespues" accept="image/*" onchange="subirFoto(event, 'despues')">
+        <label>Foto Semana Actual (Después):
+          <input type="file" accept="image/*" onchange="subirFoto(event, 'despues')" />
         </label>
       </div>
       <div id="comparador" class="hidden">
         <div class="container-comparador">
           <div class="img-container">
-            <img id="img-antes" alt="Foto antes">
-            <img id="img-despues" alt="Foto después">
-            <input type="range" min="0" max="100" value="50" id="sliderComparador">
+            <img id="img-antes" />
+            <img id="img-despues" />
+            <input type="range" min="0" max="100" value="50" id="sliderComparador" />
           </div>
         </div>
       </div>
@@ -63,57 +73,220 @@
     <!-- Botón nutrición -->
     <section id="boton-nutricion" style="text-align:center; margin: 30px 0;">
       <button onclick="window.location.href='nutricion.html'" 
-              style="padding: 12px 25px; font-size: 16px; background-color: #ffa726; border: none; border-radius: 8px; color: white; cursor: pointer;">
+        style="padding: 12px 25px; font-size: 16px; background-color: #ffa726; border: none; border-radius: 8px; color: white; cursor: pointer;">
         Ir a Mi Nutrición 🍎
       </button>
     </section>
 
     <!-- Botón lista de la compra -->
-    <section id="boton-lista" style="text-align:center; margin: 30px 0;">
-      <button onclick="window.location.href='lista-compra.html'" 
-              style="padding: 12px 25px; font-size: 16px; background-color: #4CAF50; border: none; border-radius: 8px; color: white; cursor: pointer;">
-        🛒 Lista de la compra
-      </button>
-    </section>
+<section id="boton-lista" style="text-align:center; margin: 30px 0;">
+  <button onclick="window.location.href='lista-compra.html'" 
+    style="padding: 12px 25px; font-size: 16px; background-color: #4CAF50; border: none; border-radius: 8px; color: white; cursor: pointer;">
+    🛒 Lista de la compra
+  </button>
+</section>
 
-    <!-- Registro por voz o foto -->
+
+    <!-- Registro de comida -->
     <section id="registro-comida">
       <h2>🍽️ Registrar Comida por Voz o Imagen</h2>
       <div class="registro-opciones">
         <button id="grabarAudio">🎙️ Grabar Voz</button>
         <button id="subirFotoPlato">📸 Subir Foto</button>
-        <input type="file" id="inputFotoPlato" accept="image/*" style="display:none;" capture="environment">
+        <input type="file" id="inputFotoPlato" accept="image/*" style="display:none;" capture="environment" />
       </div>
       <div id="resultadoRegistro"></div>
     </section>
 
-     </main>
+    <!-- Coach virtual -->
+    <section id="coach-virtual">
+      <h2>🤖 Coach Virtual</h2>
+      <div class="chat-box" id="chat-box">
+        <div class="mensaje ia">Hola, soy tu coach virtual. ¿En qué te puedo ayudar hoy?</div>
+      </div>
+      <div class="input-chat">
+        <input type="text" id="entradaChat" placeholder="Escribe tu pregunta aquí..." />
+        <button id="btnEnviarPregunta">Enviar</button>
+      </div>
+    </section>
+
+    <!-- Formulario para introducir datos manualmente -->
+<form id="formDatosGrafico" style="margin:20px 0; display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+  <label>
+    Día:
+    <input type="text" id="inputLabel" placeholder="Ej: Día 6" required style="width:80px;">
+  </label>
+  <label>
+    Peso (kg):
+    <input type="number" id="inputPeso" step="0.1" required style="width:70px;">
+  </label>
+  <label>
+    IMC:
+    <input type="number" id="inputIMC" step="0.1" required style="width:60px;">
+  </label>
+  <label>
+    Grasa (%):
+    <input type="number" id="inputGrasa" step="0.1" required style="width:60px;">
+  </label>
+  <label>
+    M. Muscular (kg):
+    <input type="number" id="inputMusculo" step="0.1" required style="width:70px;">
+  </label>
+  <label>
+    Medidas (cm):
+    <input type="number" id="inputMedidas" step="0.1" required style="width:70px;">
+  </label>
+  <button type="submit" style="background:#ffa726; color:white; border:none; border-radius:6px; padding:6px 12px;">Añadir</button>
+</form>
+
+  </main>
 
   <footer>
     <p>&copy; 2025 Tu Plan Personalizado</p>
   </footer>
 
-  <div id="barra-puntos"></div>
+  <!-- SCRIPTS -->
+  <!-- 1. Librerías externas -->
+  
 
-  <!-- Scripts principales -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <!-- 2. Archivos propios -->
   <script src="data.js" defer></script>
-  <script src="workouts.js" defer></script>
+  <script src="workout.js" defer></script>
   <script src="progreso.js" defer></script>
   <script src="main.js" defer></script>
   <script src="progreso-fotos.js" defer></script>
   <script src="nutricion.js" defer></script>
-  <script src="recompensas.js" defer></script>
+  <script src="recomepensas.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 
-  <!-- Service Worker para GitHub Pages -->
+  <!-- 3. Inicialización -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+      // ====== GRÁFICO ======
+      const ctx = document.getElementById("graficoPeso").getContext("2d");
+      window.chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5'],
+          datasets: [
+            { label: 'Peso (kg)', data: [55, 56, 57, 57.5, 58], borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,0.2)', fill: false, tension: 0.3 },
+            { label: 'IMC', data: [18, 18.3, 18.6, 18.7, 19], borderColor: '#8b5cf6', backgroundColor: 'rgba(139,92,246,0.2)', fill: false, tension: 0.3 },
+            { label: 'Grasa Corporal (%)', data: [18, 17.5, 17.2, 17, 16.8], borderColor: '#ef4444', backgroundColor: 'rgba(239,68,68,0.2)', fill: false, tension: 0.3 },
+            { label: 'Masa Muscular (kg)', data: [30, 31, 32, 32.5, 33], borderColor: '#22c55e', backgroundColor: 'rgba(34,197,94,0.2)', fill: false, tension: 0.3 },
+            { label: 'Medidas Corporales (cm)', data: [110, 112, 114, 115, 116], borderColor: '#f59e0b', backgroundColor: 'rgba(245,158,11,0.2)', fill: false, tension: 0.3 }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } }, title: { display: true, text: '📊 Progreso Corporal Diario' } },
+          scales: { y: { beginAtZero: false } }
+        }
+      });
+ 
+
+
+      // ====== VOZ ======
+      const grabarAudio = document.getElementById("grabarAudio");
+      const subirFotoBtn = document.getElementById("subirFotoPlato");
+      const inputFoto = document.getElementById("inputFotoPlato");
+      const resultadoRegistro = document.getElementById("resultadoRegistro");
+
+      if (grabarAudio) {
+        grabarAudio.addEventListener("click", () => {
+          const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+          if (!SpeechRecognition) return resultadoRegistro.textContent = "Tu navegador no soporta reconocimiento de voz.";
+          const recognition = new SpeechRecognition();
+          recognition.lang = "es-ES";
+          recognition.start();
+          resultadoRegistro.textContent = "🎙️ Escuchando...";
+          recognition.onresult = (event) => resultadoRegistro.innerHTML = `<strong>📝 Texto reconocido:</strong> ${event.results[0][0].transcript}<br><em>Procesando nutrición...</em>`;
+          recognition.onerror = () => resultadoRegistro.textContent = "❌ Error al reconocer la voz.";
+        });
+      }
+
+      subirFotoBtn?.addEventListener("click", () => inputFoto.click());
+      inputFoto?.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          resultadoRegistro.innerHTML = `<strong>📸 Imagen subida:</strong> ${file.name}<br><em>Analizando el plato...</em>`;
+          setTimeout(() => resultadoRegistro.innerHTML += `<br><strong>🍗 Plato detectado:</strong> Pollo con arroz<br><strong>🔥 Calorías estimadas:</strong> 520 kcal`, 2000);
+        }
+      });
+
+      // ====== COACH VIRTUAL ======
+      const chatBox = document.getElementById("chat-box");
+      const entradaChat = document.getElementById("entradaChat");
+      const btnEnviar = document.getElementById("btnEnviarPregunta");
+
+      function agregarMensaje(tipo, texto) {
+        const div = document.createElement("div");
+        div.classList.add("mensaje", tipo);
+        div.textContent = texto;
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+
+      function generarRespuestaIA(p) {
+        p = p.toLowerCase();
+        if (p.includes("desayuno")) return "Un buen desayuno podría ser avena con plátano y proteína whey.";
+        if (p.includes("piernas")) return "Hoy toca pierna: 4x12 sentadillas + 3x15 zancadas.";
+        if (p.includes("calorías")) return "Tu objetivo diario es de unas 2800 kcal. Ajusta según tu actividad.";
+        if (p.includes("creatina")) return "Toma 5g diarios de creatina después de entrenar.";
+        if (p.includes("suplementos")) return "Los más recomendados: proteína whey, creatina, omega 3 y magnesio.";
+        return "¡Buena pregunta! Estoy aprendiendo. Pronto podré darte respuestas más personalizadas.";
+      }
+
+      function enviarPregunta() {
+        const texto = entradaChat.value.trim();
+        if (!texto) return;
+        agregarMensaje("usuario", texto);
+        entradaChat.value = "";
+        setTimeout(() => agregarMensaje("ia", generarRespuestaIA(texto)), 800);
+      }
+
+      btnEnviar?.addEventListener("click", enviarPregunta);
+      entradaChat?.addEventListener("keydown", (e) => e.key === "Enter" && enviarPregunta());
+
+    });
+    
+  </script>
+
+  <!-- PWA Service Worker -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js')
+        navigator.serviceWorker.register('service-worker.js')
           .then(reg => console.log('Service Worker registrado', reg))
           .catch(err => console.log('Error en registro SW:', err));
       });
     }
+    // ====== BOTÓN RESET ESTADÍSTICAS ======
+document.getElementById("btnResetEstadisticas")?.addEventListener("click", () => {
+  if (!confirm("⚠️ ¿Seguro que quieres borrar TODAS las estadísticas?")) return;
+
+  const pinCorrecto = "1234"; // Cambia este PIN si quieres
+  const pinIngresado = prompt("Introduce el PIN para confirmar el reinicio:");
+
+  if (pinIngresado === pinCorrecto) {
+    // Borrar datos de localStorage
+    localStorage.removeItem("estadisticas");
+    localStorage.removeItem("puntos");
+    localStorage.removeItem("registrosManuales");
+
+    // Vaciar gráfico si existe
+    if (window.chart) {
+      window.chart.data.labels = [];
+      window.chart.data.datasets.forEach(ds => ds.data = []);
+      window.chart.update();
+    }
+
+    alert("✅ Estadísticas reiniciadas con éxito");
+  } else {
+    alert("❌ PIN incorrecto. No se han borrado las estadísticas.");
+  }
+});
+
   </script>
 
 </body>
