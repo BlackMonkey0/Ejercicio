@@ -1,3 +1,4 @@
+window.RUTINAS = RUTINAS;
 const RUTINAS = {
   "2025-08-01": [
     { nombre: "Flexiones", descripcion: "3 series de 12 repeticiones" },
