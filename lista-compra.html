@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de la compra</title>
+  <link rel="stylesheet" href="styles.css">
+ 
+</head>
+<body>
+
+<h1>🛒 Lista de la compra</h1>
+
+<!-- Buscador -->
+<input type="text" id="busqueda" placeholder="🔍 Buscar alimento...">
+
+<!-- Contador -->
+<p id="contador">0/0 comprados</p>
+
+<!-- Botones de control -->
+<div style="text-align:center; margin-bottom:15px;">
+  <button class="btn-control" onclick="marcarTodo(true)">✔ Marcar todo</button>
+  <button class="btn-control" onclick="marcarTodo(false)">❌ Reiniciar</button>
+</div>
+
+<!-- Categorías -->
+<h2 onclick="toggleLista('proteinas')">🥩 Proteínas ▼</h2>
+<ul id="proteinas">
+  <li><input type="checkbox"> Pechugas de pollo (5 kg)</li>
+  <li><input type="checkbox"> Pavo en filetes/picado (3 kg)</li>
+  <li><input type="checkbox"> Huevos (10 docenas)</li>
+  <li><input type="checkbox"> Atún en lata (20 latas)</li>
+  <li><input type="checkbox"> Salmón fresco/congelado (1,5 kg)</li>
+  <li><input type="checkbox"> Merluza o pescado blanco (1,5 kg)</li>
+  <li><input type="checkbox"> Carne magra de ternera (1,5 kg)</li>
+  <li><input type="checkbox"> Queso fresco batido 0% (4 kg)</li>
+  <li><input type="checkbox"> Yogur griego natural sin azúcar (2 kg)</li>
+  <li><input type="checkbox"> Clara de huevo líquida (2 litros)</li>
+</ul>
+
+<h2 onclick="toggleLista('carbohidratos')">🍚 Carbohidratos ▼</h2>
+<ul id="carbohidratos">
+  <li><input type="checkbox"> Avena (3 kg)</li>
+  <li><input type="checkbox"> Arroz integral (5 kg)</li>
+  <li><input type="checkbox"> Pasta integral (4 kg)</li>
+  <li><input type="checkbox"> Pan integral (8 barras)</li>
+  <li><input type="checkbox"> Patatas (5 kg)</li>
+  <li><input type="checkbox"> Boniatos/batatas (3 kg)</li>
+  <li><input type="checkbox"> Tortillas de trigo integral (2 paquetes)</li>
+  <li><input type="checkbox"> Harina integral (1 kg)</li>
+</ul>
+
+<h2 onclick="toggleLista('grasas')">🥑 Grasas saludables ▼</h2>
+<ul id="grasas">
+  <li><input type="checkbox"> Aguacates (10 uds)</li>
+  <li><input type="checkbox"> Aceite de oliva virgen extra (1,5 L)</li>
+  <li><input type="checkbox"> Frutos secos variados (2 kg)</li>
+  <li><input type="checkbox"> Semillas de chía o lino (500 g)</li>
+  <li><input type="checkbox"> Crema de cacahuete (1 kg)</li>
+</ul>
+
+<h2 onclick="toggleLista('frutas')">🍌 Frutas ▼</h2>
+<ul id="frutas">
+  <li><input type="checkbox"> Plátanos (40-50 uds)</li>
+  <li><input type="checkbox"> Manzanas (30 uds)</li>
+  <li><input type="checkbox"> Naranjas (20 uds)</li>
+  <li><input type="checkbox"> Fresas/frutos rojos (1,5 kg)</li>
+  <li><input type="checkbox"> Uvas o mandarinas (2 kg)</li>
+</ul>
+
+<h2 onclick="toggleLista('verduras')">🥦 Verduras ▼</h2>
+<ul id="verduras">
+  <li><input type="checkbox"> Espinacas (2 kg)</li>
+  <li><input type="checkbox"> Brócoli (2 kg)</li>
+  <li><input type="checkbox"> Pimientos (2 kg)</li>
+  <li><input type="checkbox"> Calabacines (1,5 kg)</li>
+  <li><input type="checkbox"> Zanahorias (2 kg)</li>
+  <li><input type="checkbox"> Tomates (2 kg)</li>
+  <li><input type="checkbox"> Lechuga (1,5 kg)</li>
+  <li><input type="checkbox"> Cebollas (1,5 kg)</li>
+</ul>
+
+<h2 onclick="toggleLista('lacteos')">🥛 Lácteos ▼</h2>
+<ul id="lacteos">
+  <li><input type="checkbox"> Leche (12 litros)</li>
+  <li><input type="checkbox"> Queso fresco batido</li>
+  <li><input type="checkbox"> Yogur griego natural</li>
+</ul>
+
+<h2 onclick="toggleLista('suplementos')">💊 Suplementos ▼</h2>
+<ul id="suplementos">
+  <li><input type="checkbox"> Vitamina C + Zinc</li>
+  <li><input type="checkbox"> Magnesio + Calcio</li>
+  <li><input type="checkbox"> Proteína whey (2 kg)</li>
+  <li><input type="checkbox"> Creatina monohidrato (500 g)</li>
+  <li><input type="checkbox"> Multivitamínico</li>
+</ul>
+
+<!-- Botón volver -->
+<a href="index.html" class="volver">⬅ Volver al inicio</a>
+
+<script>
+  // Reinicio automático mensual
+  const mesActual = new Date().getMonth();
+  if (localStorage.getItem("mesLista") != mesActual) {
+    localStorage.clear();
+    localStorage.setItem("mesLista", mesActual);
+  }
+
+  // Guardar estado de los checkboxes
+  const checks = document.querySelectorAll('input[type="checkbox"]');
+  checks.forEach((check, i) => {
+    if (localStorage.getItem("compra" + i) === "true") check.checked = true;
+    check.addEventListener("change", () => {
+      localStorage.setItem("compra" + i, check.checked);
+      actualizarContador();
+    });
+  });
+
+  // Contador de progreso
+  function actualizarContador() {
+    const total = checks.length;
+    const marcados = [...checks].filter(c => c.checked).length;
+    document.getElementById("contador").textContent = `${marcados}/${total} comprados`;
+  }
+  actualizarContador();
+
+  // Marcar o reiniciar todo
+  function marcarTodo(estado) {
+    checks.forEach((c, i) => {
+      c.checked = estado;
+      localStorage.setItem("compra" + i, estado);
+    });
+    actualizarContador();
+  }
+
+  // Plegar y desplegar categorías
+  function toggleLista(id) {
+    const lista = document.getElementById(id);
+    lista.style.display = (lista.style.display === "none") ? "block" : "none";
+  }
+
+  // Búsqueda
+  document.getElementById("busqueda").addEventListener("keyup", function () {
+    const filtro = this.value.toLowerCase();
+    document.querySelectorAll("ul li").forEach(li => {
+      li.style.display = li.textContent.toLowerCase().includes(filtro) ? "" : "none";
+    });
+  });
+</script>
+
+</body>
+</html>
