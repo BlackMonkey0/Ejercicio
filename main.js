@@ -1,5 +1,8 @@
-// Verifica que los elementos existen antes de usarlos
+// =======================
+// 📅 CALENDARIO
+// =======================
 const diasContainer = document.getElementById("dias");
+
 if (diasContainer) {
   const detalleDia = document.getElementById("detalle-dia");
   const tituloDia = document.getElementById("titulo-dia");
@@ -20,99 +23,129 @@ if (diasContainer) {
     diasContainer.appendChild(div);
   }
 
-  window.mostrarDia = function(fecha) {
+  function mostrarDia(fecha) {
     const clave = fecha.toISOString().split("T")[0];
-    const comidas = typeof PLAN_COMIDAS !== "undefined" ? (PLAN_COMIDAS[clave] || []) : [];
-    const entreno = typeof RUTINAS !== "undefined" ? (RUTINAS[clave] || []) : [];
+    const comidas = window.PLAN_COMIDAS?.[clave] || [];
+    const entreno = window.RUTINAS?.[clave] || [];
 
     tituloDia.textContent = `Día: ${fecha.toLocaleDateString()}`;
     comidasDiv.innerHTML = "<h3>🍽️ Comidas</h3>";
     entrenoDiv.innerHTML = "<h3>💪 Entrenamiento</h3>";
 
-    comidas.forEach(c => {
-      comidasDiv.innerHTML += `
-        <div class="card">
-          <h4>${c.nombre}</h4>
-          <p>${c.descripcion}</p>
-          <small>${c.calorias} kcal</small>
-        </div>`;
-    });
+    if (comidas.length === 0) {
+      comidasDiv.innerHTML += "<p>No hay comidas registradas para este día.</p>";
+    } else {
+      comidas.forEach(c => {
+        comidasDiv.innerHTML += `
+          <div class="card">
+            <h4>${c.nombre}</h4>
+            <p>${c.descripcion}</p>
+            <small>${c.calorias} kcal</small>
+          </div>`;
+      });
+    }
 
-    entreno.forEach(e => {
-      entrenoDiv.innerHTML += `
-        <div class="card">
-          <h4>${e.nombre}</h4>
-          <p>${e.descripcion}</p>
-        </div>`;
-    });
+    if (entreno.length === 0) {
+      entrenoDiv.innerHTML += "<p>No hay entrenamiento registrado para este día.</p>";
+    } else {
+      entreno.forEach(e => {
+        entrenoDiv.innerHTML += `
+          <div class="card">
+            <h4>${e.nombre}</h4>
+            <p>${e.descripcion}</p>
+          </div>`;
+      });
+    }
 
     detalleDia.classList.remove("hidden");
-  };
+  }
 
-  window.cerrarDetalle = function() {
+  window.cerrarDetalle = function () {
     detalleDia.classList.add("hidden");
   };
 }
 
-// SISTEMA DE PUNTOS
-let puntos = parseInt(localStorage.getItem('puntos')) || 0;
+// =======================
+// 🏆 SISTEMA DE PUNTOS
+// =======================
+let puntos = parseInt(localStorage.getItem("puntos"), 10) || 0;
 actualizarPuntos();
 
 function sumarPuntos(cantidad) {
   puntos += cantidad;
-  localStorage.setItem('puntos', puntos);
+  localStorage.setItem("puntos", puntos);
   actualizarPuntos();
 }
 
 function actualizarPuntos() {
   const puntosDiv = document.getElementById("barra-puntos");
   if (puntosDiv) {
-    puntosDiv.innerHTML = `<strong>Puntos:</strong> ${puntos}`;
+    puntosDiv.innerHTML = `<strong>🏆 Puntos:</strong> ${puntos}`;
   }
 }
 
-// CHAT IA (solo una versión, sin duplicados)
+// =======================
+// ✏️ REGISTRO MANUAL DE DATOS
+// =======================
 document.addEventListener("DOMContentLoaded", () => {
-  const btnEnviar = document.getElementById("btnEnviarPregunta");
-  const entradaChat = document.getElementById("entradaChat");
-  const chatBox = document.getElementById("chat-box");
+  const formManual = document.getElementById("form-manual");
+  const listaManual = document.getElementById("listaManual");
 
-  if (btnEnviar && entradaChat && chatBox) {
-    btnEnviar.addEventListener("click", enviarPregunta);
-    entradaChat.addEventListener("keydown", function(e) {
-      if (e.key === "Enter") enviarPregunta();
+  let registrosManuales = JSON.parse(localStorage.getItem("registrosManuales")) || [];
+  renderizarLista();
+
+  if (formManual) {
+    formManual.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const nombre = document.getElementById("nombreManual").value.trim();
+      const cantidad = parseFloat(document.getElementById("cantidadManual").value);
+      const calorias = parseFloat(document.getElementById("caloriasManual").value);
+      const proteinas = parseFloat(document.getElementById("proteinasManual").value);
+      const carbohidratos = parseFloat(document.getElementById("carbohidratosManual").value);
+      const grasas = parseFloat(document.getElementById("grasasManual").value);
+
+      if (!nombre || isNaN(cantidad) || isNaN(calorias)) {
+        alert("Por favor, rellena todos los campos correctamente.");
+        return;
+      }
+
+      const nuevoAlimento = {
+        id: Date.now(),
+        nombre,
+        cantidad,
+        calorias,
+        proteinas: proteinas || 0,
+        carbohidratos: carbohidratos || 0,
+        grasas: grasas || 0,
+        fecha: new Date().toLocaleDateString()
+      };
+
+      registrosManuales.push(nuevoAlimento);
+      localStorage.setItem("registrosManuales", JSON.stringify(registrosManuales));
+      renderizarLista();
+      formManual.reset();
     });
   }
 
-  function enviarPregunta() {
-    const texto = entradaChat.value.trim();
-    if (!texto) return;
-    agregarMensaje("usuario", texto);
-    entradaChat.value = "";
+  function renderizarLista() {
+    if (!listaManual) return;
+    listaManual.innerHTML = "";
 
-    setTimeout(() => {
-      const respuesta = generarRespuestaIA(texto.toLowerCase());
-      agregarMensaje("ia", respuesta);
-      chatBox.scrollTop = chatBox.scrollHeight;
-    }, 800);
-  }
+    if (registrosManuales.length === 0) {
+      listaManual.innerHTML = "<li>No hay registros todavía.</li>";
+      return;
+    }
 
-  function agregarMensaje(tipo, texto) {
-    const div = document.createElement("div");
-    div.classList.add("mensaje", tipo);
-    div.textContent = texto;
-    chatBox.appendChild(div);
-  }
-
-  function generarRespuestaIA(pregunta) {
-    if (pregunta.includes("desayuno")) return "Un buen desayuno podría ser avena con plátano y proteína whey.";
-    if (pregunta.includes("piernas")) return "Hoy toca pierna: 4x12 sentadillas + 3x15 zancadas.";
-    if (pregunta.includes("calorías")) return "Tu objetivo diario es de unas 2800 kcal. Ajusta según tu actividad.";
-    if (pregunta.includes("creatina")) return "Toma 5g diarios de creatina después de entrenar.";
-    if (pregunta.includes("suplementos")) return "Los más recomendados: proteína whey, creatina, omega 3 y magnesio.";
-    return "¡Buena pregunta! Estoy aprendiendo. Pronto podré darte respuestas más personalizadas.";
+    registrosManuales.slice().reverse().forEach(item => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <strong>${item.nombre}</strong> (${item.cantidad}g/ml) - 
+        ${item.calorias} kcal | ${item.proteinas}g P | 
+        ${item.carbohidratos}g C | ${item.grasas}g G 
+        <span style="color:gray;">[${item.fecha}]</span>
+      `;
+      listaManual.appendChild(li);
+    });
   }
 });
-
-// Clase hidden en CSS:
-// .hidden { display: none !important; }
