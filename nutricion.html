@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mi Nutrición</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .header-nutricion {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 10px;
+      /* Elimina borde de depuración */
+      border: none;
+    }
+    .boton-volver {
+      padding: 8px 16px;
+      background-color: #ffa726;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 4px 8px rgba(255, 167, 38, 0.5);
+      transition: background-color 0.3s ease;
+    }
+    .boton-volver:hover {
+      background-color: #fb8c00;
+    }
+  </style>
+</head>
+<body>
+  <div class="nutricion-container">
+    <div class="header-nutricion">
+      <h1>Mi Nutrición</h1>
+      <button class="boton-volver" onclick="window.location.href='index.html'">
+        ← Volver al Inicio
+      </button>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-button active" data-tab="calculadora">Calculadora</button>
+      <button class="tab-button" data-tab="escaner">Escáner de alimentos</button>
+      <button class="tab-button" data-tab="historial">Historial</button>
+    </div>
+
+    <div class="tab-content active" id="calculadora">
+      <h2>Calculadora de calorías y macros</h2>
+      <form id="formMacros">
+        <label for="pesoActual">Peso actual (kg):</label>
+        <input type="number" id="pesoActual" required>
+
+        <label for="objetivoSemanal">Objetivo semanal (kg):</label>
+        <input type="number" id="objetivoSemanal" required>
+
+        <label for="fase">Fase:</label>
+        <select id="fase">
+          <option value="volumen">Volumen</option>
+          <option value="definicion">Definición</option>
+        </select>
+
+        <button type="submit">Calcular</button>
+      </form>
+      <div id="resultadoMacros"></div>
+    </div>
+
+    <div class="tab-content" id="escaner">
+      <h2>Escanear alimento</h2>
+      <label for="fotoAlimento">Selecciona una foto:</label>
+      <input type="file" accept="image/*" id="fotoAlimento" capture="environment">
+      <button id="analizarFoto">Analizar</button>
+      <div id="resultadoEscaner"></div>
+    </div>
+
+    <div class="tab-content" id="historial">
+      <h2>Historial de comidas</h2>
+      <ul id="listaHistorial"></ul>
+    </div>
+  </div>
+
+  <script src="nutricion.js" defer></script>
+</body>
+</html>

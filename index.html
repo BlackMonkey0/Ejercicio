@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tu Entrenador y Dietista</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#ffa726" />
+</head>
+<body>
+  <header>
+    <h1>Plan Transformación 55 → 80kg</h1>
+    <p>Hasta el 5 de diciembre</p>
+  </header>
+
+  <main>
+    <section id="calendario">
+      <h2>📅 Calendario de Entrenamiento y Comidas</h2>
+      <div id="dias"></div>
+    </section>
+
+    <section id="detalle-dia" class="hidden">
+      <h2 id="titulo-dia"></h2>
+      <div id="comidas"></div>
+      <div id="entrenamiento"></div>
+      <button onclick="cerrarDetalle()">Cerrar</button>
+    </section>
+
+    <section id="progreso">
+      <h2>📈 Progreso</h2>
+      <canvas id="graficoPeso" width="300" height="150"></canvas>
+      <canvas id="graficoFuerza" width="300" height="150"></canvas>
+      <div id="cuadroIMC" style="margin-top: 20px; font-size: 18px;"></div>
+    </section>
+
+    <section id="progreso-visual">
+      <h2>📸 Progreso Visual (Antes vs Después)</h2>
+      <div class="subida-fotos">
+        <label for="fotoAntes">Foto Semana 1 (Antes):
+          <input type="file" id="fotoAntes" accept="image/*" onchange="subirFoto(event, 'antes')" />
+        </label>
+        <label for="fotoDespues">Foto Semana Actual (Después):
+          <input type="file" id="fotoDespues" accept="image/*" onchange="subirFoto(event, 'despues')" />
+        </label>
+      </div>
+      <div id="comparador" class="hidden">
+        <div class="container-comparador">
+          <div class="img-container">
+            <img id="img-antes" alt="Foto antes" />
+            <img id="img-despues" alt="Foto después" />
+            <input type="range" min="0" max="100" value="50" id="sliderComparador" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="boton-nutricion" style="text-align:center; margin: 30px 0;">
+      <button onclick="window.location.href='nutricion.html'" 
+              style="padding: 12px 25px; font-size: 16px; background-color: #ffa726; border: none; border-radius: 8px; color: white; cursor: pointer;">
+        Ir a Mi Nutrición 🍎
+      </button>
+    </section>
+
+    <!-- Registro por voz o foto -->
+    <section id="registro-comida">
+      <h2>🍽️ Registrar Comida por Voz o Imagen</h2>
+      <div class="registro-opciones">
+        <button id="grabarAudio">🎙️ Grabar Voz</button>
+        <button id="subirFotoPlato">📸 Subir Foto</button>
+        <input type="file" id="inputFotoPlato" accept="image/*" style="display:none;" capture="environment" />
+      </div>
+      <div id="resultadoRegistro"></div>
+    </section>
+
+    <!-- Coach Virtual con IA -->
+    <section id="coach-virtual">
+      <h2>🤖 Coach Virtual</h2>
+      <div class="chat-box" id="chat-box">
+        <div class="mensaje ia">Hola, soy tu coach virtual. ¿En qué te puedo ayudar hoy?</div>
+      </div>
+      <div class="input-chat">
+        <input type="text" id="entradaChat" placeholder="Escribe tu pregunta aquí..." />
+        <button id="btnEnviarPregunta">Enviar</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Tu Plan Personalizado</p>
+  </footer>
+
+  <div id="barra-puntos"></div>
+
+  <!-- Usa defer en los scripts para mejor rendimiento -->
+<script src="data.js" defer></script>
+<script src="workouts.js" defer></script>
+<script src="progreso.js" defer></script>
+<script src="main.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+<script src="progreso-fotos.js" defer></script>
+<script src="nutricion.js" defer></script>
+<script src="recompensas.js" defer></script>
+
+</body>
+</html>
