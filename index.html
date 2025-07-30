@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <title>Tu Entrenador y Dietista</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#ffa726" />
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#ffa726">
 </head>
 <body>
+
   <header>
     <h1>Plan Transformación 55 → 80kg</h1>
     <p>Hasta el 5 de diciembre</p>
   </header>
 
   <main>
+    <!-- Calendario -->
     <section id="calendario">
       <h2>📅 Calendario de Entrenamiento y Comidas</h2>
       <div id="dias"></div>
     </section>
 
+    <!-- Detalle de día -->
     <section id="detalle-dia" class="hidden">
       <h2 id="titulo-dia"></h2>
       <div id="comidas"></div>
       <div id="entrenamiento"></div>
-      <button id="btnCerrarDetalle" type="button">Cerrar</button>
+      <button onclick="cerrarDetalle()">Cerrar</button>
     </section>
 
+    <!-- Progreso -->
     <section id="progreso">
       <h2>📈 Progreso</h2>
       <canvas id="graficoPeso" width="300" height="150"></canvas>
@@ -34,27 +38,29 @@
       <div id="cuadroIMC" style="margin-top: 20px; font-size: 18px;"></div>
     </section>
 
+    <!-- Progreso visual -->
     <section id="progreso-visual">
       <h2>📸 Progreso Visual (Antes vs Después)</h2>
       <div class="subida-fotos">
         <label for="fotoAntes">Foto Semana 1 (Antes):
-          <input type="file" id="fotoAntes" accept="image/*" />
+          <input type="file" id="fotoAntes" accept="image/*" onchange="subirFoto(event, 'antes')">
         </label>
         <label for="fotoDespues">Foto Semana Actual (Después):
-          <input type="file" id="fotoDespues" accept="image/*" />
+          <input type="file" id="fotoDespues" accept="image/*" onchange="subirFoto(event, 'despues')">
         </label>
       </div>
       <div id="comparador" class="hidden">
         <div class="container-comparador">
           <div class="img-container">
-            <img id="img-antes" alt="Foto antes" />
-            <img id="img-despues" alt="Foto después" />
-            <input type="range" min="0" max="100" value="50" id="sliderComparador" />
+            <img id="img-antes" alt="Foto antes">
+            <img id="img-despues" alt="Foto después">
+            <input type="range" min="0" max="100" value="50" id="sliderComparador">
           </div>
         </div>
       </div>
     </section>
 
+    <!-- Botón nutrición -->
     <section id="boton-nutricion" style="text-align:center; margin: 30px 0;">
       <button onclick="window.location.href='nutricion.html'" 
               style="padding: 12px 25px; font-size: 16px; background-color: #ffa726; border: none; border-radius: 8px; color: white; cursor: pointer;">
@@ -62,29 +68,26 @@
       </button>
     </section>
 
+    <!-- Botón lista de la compra -->
+    <section id="boton-lista" style="text-align:center; margin: 30px 0;">
+      <button onclick="window.location.href='lista-compra.html'" 
+              style="padding: 12px 25px; font-size: 16px; background-color: #4CAF50; border: none; border-radius: 8px; color: white; cursor: pointer;">
+        🛒 Lista de la compra
+      </button>
+    </section>
+
     <!-- Registro por voz o foto -->
     <section id="registro-comida">
       <h2>🍽️ Registrar Comida por Voz o Imagen</h2>
       <div class="registro-opciones">
-        <button id="grabarAudio" type="button">🎙️ Grabar Voz</button>
-        <button id="subirFotoPlato" type="button">📸 Subir Foto</button>
-        <input type="file" id="inputFotoPlato" accept="image/*" style="display:none;" capture="environment" />
+        <button id="grabarAudio">🎙️ Grabar Voz</button>
+        <button id="subirFotoPlato">📸 Subir Foto</button>
+        <input type="file" id="inputFotoPlato" accept="image/*" style="display:none;" capture="environment">
       </div>
       <div id="resultadoRegistro"></div>
     </section>
 
-    <!-- Coach Virtual con IA -->
-    <section id="coach-virtual">
-      <h2>🤖 Coach Virtual</h2>
-      <div class="chat-box" id="chat-box">
-        <div class="mensaje ia">Hola, soy tu coach virtual. ¿En qué te puedo ayudar hoy?</div>
-      </div>
-      <div class="input-chat">
-        <input type="text" id="entradaChat" placeholder="Escribe tu pregunta aquí..." autocomplete="off" />
-        <button id="btnEnviarPregunta" type="button">Enviar</button>
-      </div>
-    </section>
-  </main>
+     </main>
 
   <footer>
     <p>&copy; 2025 Tu Plan Personalizado</p>
@@ -92,42 +95,26 @@
 
   <div id="barra-puntos"></div>
 
-  <!-- Usa defer en los scripts para mejor rendimiento -->
-  <script src="data.js" defer></script>
-  <script src="workouts.js" defer></script>
-  <script src="progreso.js" defer></script>
-  <script src="main.js" defer></script>
+  <!-- Scripts principales -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-  <script src="progreso-fotos.js" defer></script>
-  <script src="nutricion.js" defer></script>
-  <script src="recompensas.js" defer></script>
+  <script src="./data.js" defer></script>
+  <script src="./workouts.js" defer></script>
+  <script src="./progreso.js" defer></script>
+  <script src="./main.js" defer></script>
+  <script src="./progreso-fotos.js" defer></script>
+  <script src="./nutricion.js" defer></script>
+  <script src="./recompensas.js" defer></script>
 
+  <!-- Service Worker para GitHub Pages -->
   <script>
-    // Inicialización y validaciones de eventos para mayor robustez
-    document.addEventListener("DOMContentLoaded", () => {
-      // Eventos para subida de fotos de progreso visual
-      const fotoAntes = document.getElementById("fotoAntes");
-      const fotoDespues = document.getElementById("fotoDespues");
-      if (fotoAntes)
-        fotoAntes.addEventListener("change", e => subirFoto(e, "antes"));
-      if (fotoDespues)
-        fotoDespues.addEventListener("change", e => subirFoto(e, "despues"));
-
-      // Botón cerrar detalle del día
-      const btnCerrarDetalle = document.getElementById("btnCerrarDetalle");
-      if (btnCerrarDetalle)
-        btnCerrarDetalle.addEventListener("click", () => {
-          const detalleDia = document.getElementById("detalle-dia");
-          if (detalleDia) detalleDia.classList.add("hidden");
-        });
-
-      // Botón para subir foto de registro de comida
-      const subirFotoPlato = document.getElementById("subirFotoPlato");
-      const inputFotoPlato = document.getElementById("inputFotoPlato");
-      if (subirFotoPlato && inputFotoPlato) {
-        subirFotoPlato.addEventListener("click", () => inputFotoPlato.click());
-      }
-    });
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+          .then(reg => console.log('Service Worker registrado', reg))
+          .catch(err => console.log('Error en registro SW:', err));
+      });
+    }
   </script>
+
 </body>
 </html>
