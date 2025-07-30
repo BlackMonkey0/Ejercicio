@@ -24,7 +24,7 @@
       <h2 id="titulo-dia"></h2>
       <div id="comidas"></div>
       <div id="entrenamiento"></div>
-      <button onclick="cerrarDetalle()">Cerrar</button>
+      <button id="btnCerrarDetalle" type="button">Cerrar</button>
     </section>
 
     <section id="progreso">
@@ -38,10 +38,10 @@
       <h2>📸 Progreso Visual (Antes vs Después)</h2>
       <div class="subida-fotos">
         <label for="fotoAntes">Foto Semana 1 (Antes):
-          <input type="file" id="fotoAntes" accept="image/*" onchange="subirFoto(event, 'antes')" />
+          <input type="file" id="fotoAntes" accept="image/*" />
         </label>
         <label for="fotoDespues">Foto Semana Actual (Después):
-          <input type="file" id="fotoDespues" accept="image/*" onchange="subirFoto(event, 'despues')" />
+          <input type="file" id="fotoDespues" accept="image/*" />
         </label>
       </div>
       <div id="comparador" class="hidden">
@@ -66,8 +66,8 @@
     <section id="registro-comida">
       <h2>🍽️ Registrar Comida por Voz o Imagen</h2>
       <div class="registro-opciones">
-        <button id="grabarAudio">🎙️ Grabar Voz</button>
-        <button id="subirFotoPlato">📸 Subir Foto</button>
+        <button id="grabarAudio" type="button">🎙️ Grabar Voz</button>
+        <button id="subirFotoPlato" type="button">📸 Subir Foto</button>
         <input type="file" id="inputFotoPlato" accept="image/*" style="display:none;" capture="environment" />
       </div>
       <div id="resultadoRegistro"></div>
@@ -80,8 +80,8 @@
         <div class="mensaje ia">Hola, soy tu coach virtual. ¿En qué te puedo ayudar hoy?</div>
       </div>
       <div class="input-chat">
-        <input type="text" id="entradaChat" placeholder="Escribe tu pregunta aquí..." />
-        <button id="btnEnviarPregunta">Enviar</button>
+        <input type="text" id="entradaChat" placeholder="Escribe tu pregunta aquí..." autocomplete="off" />
+        <button id="btnEnviarPregunta" type="button">Enviar</button>
       </div>
     </section>
   </main>
@@ -93,14 +93,41 @@
   <div id="barra-puntos"></div>
 
   <!-- Usa defer en los scripts para mejor rendimiento -->
-<script src="data.js" defer></script>
-<script src="workouts.js" defer></script>
-<script src="progreso.js" defer></script>
-<script src="main.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-<script src="progreso-fotos.js" defer></script>
-<script src="nutricion.js" defer></script>
-<script src="recompensas.js" defer></script>
+  <script src="data.js" defer></script>
+  <script src="workouts.js" defer></script>
+  <script src="progreso.js" defer></script>
+  <script src="main.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <script src="progreso-fotos.js" defer></script>
+  <script src="nutricion.js" defer></script>
+  <script src="recompensas.js" defer></script>
 
+  <script>
+    // Inicialización y validaciones de eventos para mayor robustez
+    document.addEventListener("DOMContentLoaded", () => {
+      // Eventos para subida de fotos de progreso visual
+      const fotoAntes = document.getElementById("fotoAntes");
+      const fotoDespues = document.getElementById("fotoDespues");
+      if (fotoAntes)
+        fotoAntes.addEventListener("change", e => subirFoto(e, "antes"));
+      if (fotoDespues)
+        fotoDespues.addEventListener("change", e => subirFoto(e, "despues"));
+
+      // Botón cerrar detalle del día
+      const btnCerrarDetalle = document.getElementById("btnCerrarDetalle");
+      if (btnCerrarDetalle)
+        btnCerrarDetalle.addEventListener("click", () => {
+          const detalleDia = document.getElementById("detalle-dia");
+          if (detalleDia) detalleDia.classList.add("hidden");
+        });
+
+      // Botón para subir foto de registro de comida
+      const subirFotoPlato = document.getElementById("subirFotoPlato");
+      const inputFotoPlato = document.getElementById("inputFotoPlato");
+      if (subirFotoPlato && inputFotoPlato) {
+        subirFotoPlato.addEventListener("click", () => inputFotoPlato.click());
+      }
+    });
+  </script>
 </body>
 </html>
