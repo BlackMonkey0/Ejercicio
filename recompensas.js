@@ -32,4 +32,5 @@ function desbloquear(index) {
     mostrarRecompensas();
   }
 }
-// Llamar a mostrarRecompensas al cargar la página
+
+window.addEventListener("DOMContentLoaded", mostrarRecompensas);
